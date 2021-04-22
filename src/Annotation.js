@@ -11,8 +11,10 @@ export class Annotation extends EventDispatcher {
 
 		this.scene = null;
 		this._title = args.title || 'No Title';
-		this._description = args.description || '';
-		this._image = args.image || '';
+		this._description = args.description ? `<span class="annotation-description-content">${args.description}</span>` : '';
+		this._image = args.image ? `<div class="image"><img src="${args.image}"></div>` : '';
+		this._marker = args.image ? `<div style="background-image: url(${args.image});"></div>` : '';
+		this._type = args.image ? 'image' : 'icon';
 		this.offset = new THREE.Vector3();
 		this.uuid = THREE.Math.generateUUID();
 
@@ -48,7 +50,7 @@ export class Annotation extends EventDispatcher {
 		let iconClose = exports.resourcePath + '/icons/close.svg';
 
 		this.domElement = $(`
-			<div class="annotation" oncontextmenu="return false;">
+			<div class="annotation" data-type="${this._type}" oncontextmenu="return false;" >
 				<div class="annotation-titlebar">
 					<span class="annotation-label"></span>
 				</div>
@@ -56,12 +58,10 @@ export class Annotation extends EventDispatcher {
 					<span class="annotation-description-close">
 						<img src="${iconClose}" width="16px">
 					</span>
-					<div class="image">
-						<img src="${this._image}">
-					</div>
-					<span class="annotation-description-content">${this._description}</span>
+					${this._image}
+					${this._description}
 				</div>
-				<div class="annotation-marker"><div style="background-image: url(${this._image});"></div></div>
+				<div class="annotation-marker">${this._marker}</div>
 			</div>
 		`);
 
