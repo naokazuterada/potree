@@ -61,9 +61,11 @@ export class Annotation extends EventDispatcher {
 					</div>
 					<span class="annotation-description-content">${this._description}</span>
 				</div>
+				<div class="annotation-marker"><div style="background-image: url(${this._image});"></div></div>
 			</div>
 		`);
 
+		this.elMarker = this.domElement.find('.annotation-marker');
 		this.elTitlebar = this.domElement.find('.annotation-titlebar');
 		this.elTitle = this.elTitlebar.find('.annotation-label');
 		this.elTitle.append(this._title);
@@ -79,6 +81,7 @@ export class Annotation extends EventDispatcher {
 		};
 
 		this.elTitle.click(this.clickTitle);
+		this.elMarker.click(this.clickTitle);
 
 		this.actions = this.actions.map(a => {
 			if (a instanceof Action) {
