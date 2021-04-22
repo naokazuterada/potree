@@ -12,6 +12,7 @@ export class Annotation extends EventDispatcher {
 		this.scene = null;
 		this._title = args.title || 'No Title';
 		this._description = args.description || '';
+		this._image = args.image || '';
 		this.offset = new THREE.Vector3();
 		this.uuid = THREE.Math.generateUUID();
 
@@ -55,6 +56,9 @@ export class Annotation extends EventDispatcher {
 					<span class="annotation-description-close">
 						<img src="${iconClose}" width="16px">
 					</span>
+					<div class="image">
+						<img src="${this._image}">
+					</div>
 					<span class="annotation-description-content">${this._description}</span>
 				</div>
 			</div>
@@ -130,7 +134,7 @@ export class Annotation extends EventDispatcher {
 				</svg>
 			</div>
 		`);
-		
+
 		let svg = domElement.find("svg")[0];
 		let elLine = domElement.find("line")[0];
 		let elStart = domElement.find("circle")[0];
@@ -190,7 +194,7 @@ export class Annotation extends EventDispatcher {
 				//let renderAreaHeight = viewer.renderer.getSize().height;
 
 				let diff = {
-					x: ui.originalPosition.left - ui.position.left, 
+					x: ui.originalPosition.left - ui.position.left,
 					y: ui.originalPosition.top - ui.position.top
 				};
 
@@ -243,7 +247,7 @@ export class Annotation extends EventDispatcher {
 
 				return screenPos;
 			};
-			
+
 			start = toScreen(start);
 			end = toScreen(end);
 
