@@ -50,7 +50,7 @@ export class Annotation extends EventDispatcher {
 		let iconClose = exports.resourcePath + '/icons/close.svg';
 
 		this.domElement = $(`
-			<div class="annotation" data-type="${this._type}" oncontextmenu="return false;" >
+			<div class="annotation" data-type="${this._type}" data-index="${args.index}" oncontextmenu="return false;" >
 				<div class="annotation-titlebar">
 					<span class="annotation-label"></span>
 				</div>
@@ -61,8 +61,8 @@ export class Annotation extends EventDispatcher {
 					${this._image}
 					${this._description}
 				</div>
-				<span class="annotation-prev" data-index="${args.index}">←</span>
-				<span class="annotation-next" data-index="${args.index}">→</span>
+				<span class="annotation-prev">←</span>
+				<span class="annotation-next">→</span>
 				<div class="annotation-marker">${this._marker}</div>
 			</div>
 		`);
