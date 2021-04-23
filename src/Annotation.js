@@ -61,6 +61,8 @@ export class Annotation extends EventDispatcher {
 					${this._image}
 					${this._description}
 				</div>
+				<span class="annotation-prev">←</span>
+				<span class="annotation-next">→</span>
 				<div class="annotation-marker">${this._marker}</div>
 			</div>
 		`);
