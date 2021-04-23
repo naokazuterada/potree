@@ -10,6 +10,7 @@ export class Annotation extends EventDispatcher {
 		super();
 
 		this.scene = null;
+		this._index = args.index;
 		this._title = args.title || 'No Title';
 		this._description = args.description ? `<span class="annotation-description-content">${args.description}</span>` : '';
 		this._image = args.image ? `<div class="image"><img src="${args.image}"></div>` : '';
