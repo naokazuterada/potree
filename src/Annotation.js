@@ -23,6 +23,8 @@ export class Annotation extends EventDispatcher {
 			this._attachment = `<div class="image"><img src="${args.image}"></div>`;
 		} else if(args.pdf) {
 			this._attachment = `<div class="pdf"><a href="${args.pdf}" target="_blank">【PDFリンク】</a></div>`;
+		} else if(args.youtube) {
+			this._attachment = `<iframe width="560" height="315" src="https://www.youtube.com/embed/${args.youtube}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
 		}
 
 		if (!args.position) {
