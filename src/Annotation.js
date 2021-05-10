@@ -13,11 +13,17 @@ export class Annotation extends EventDispatcher {
 		this._index = args.index;
 		this._title = args.title || 'No Title';
 		this._description = args.description ? `<span class="annotation-description-content">${args.description}</span>` : '';
-		this._image = args.image ? `<div class="image"><img src="${args.image}"></div>` : '';
 		this._marker = args.image ? `<div style="background-image: url(${args.image});"></div>` : '';
 		this._type = args.image ? 'image' : 'icon';
 		this.offset = new THREE.Vector3();
 		this.uuid = THREE.Math.generateUUID();
+
+		this._attachment = '';
+		if (args.image) {
+			this._attachment = `<div class="image"><img src="${args.image}"></div>`;
+		} else if(args.pdf) {
+			this._attachment = `<div class="pdf"><a href="${args.pdf}" target="_blank">【PDFリンク】</a></div>`;
+		}
 
 		if (!args.position) {
 			this.position = null;
@@ -59,7 +65,7 @@ export class Annotation extends EventDispatcher {
 					<span class="annotation-description-close">
 						<img src="${iconClose}" width="16px">
 					</span>
-					${this._image}
+					${this._attachment}
 					${this._description}
 				</div>
 				<span class="annotation-prev">←</span>
