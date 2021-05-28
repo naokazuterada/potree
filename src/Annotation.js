@@ -117,7 +117,7 @@ export class Annotation extends EventDispatcher {
 
 		this.elDescriptionClose.hover(
 			e => this.elDescriptionClose.css('opacity', '1'),
-			e => this.elDescriptionClose.css('opacity', '0.5')
+			e => this.elDescriptionClose.css('opacity', '0.8')
 		);
 		this.elDescriptionClose.click(e => this.setHighlighted(false));
 		// this.elDescriptionContent.html(this._description);
