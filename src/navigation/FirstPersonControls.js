@@ -30,7 +30,7 @@ export class FirstPersonControls extends EventDispatcher {
 		this.sceneControls = new THREE.Scene();
 
 		this.rotationSpeed = 200;
-		this.moveSpeed = 10;
+		this.moveSpeed = 1;
 		this.lockElevation = false;
 
 		this.keys = {
@@ -61,7 +61,7 @@ export class FirstPersonControls extends EventDispatcher {
 				this.dispatchEvent({type: 'start'});
 			}
 
-			let moveSpeed = this.viewer.getMoveSpeed();
+			let moveSpeed = this.moveSpeed;
 
 			let ndrag = {
 				x: e.drag.lastDrag.x / this.renderer.domElement.clientWidth,
@@ -82,7 +82,7 @@ export class FirstPersonControls extends EventDispatcher {
 		};
 
 		let scroll = (e) => {
-			let speed = this.viewer.getMoveSpeed();
+			let speed = this.moveSpeed;
 
 			if (e.delta < 0) {
 				speed = speed * 0.9;
@@ -114,10 +114,10 @@ export class FirstPersonControls extends EventDispatcher {
 		this.pitchDelta = 0;
 		this.translationDelta.set(0, 0, 0);
 	}
-	
+
 	zoomToLocation(mouse){
 		let camera = this.scene.getActiveCamera();
-		
+
 		let I = Utils.getMousePointCloudIntersection(
 			mouse,
 			camera,
@@ -211,34 +211,34 @@ export class FirstPersonControls extends EventDispatcher {
 				if (moveForward && moveBackward) {
 					this.translationWorldDelta.set(0, 0, 0);
 				} else if (moveForward) {
-					this.translationWorldDelta.copy(dir.multiplyScalar(this.viewer.getMoveSpeed()));
+					this.translationWorldDelta.copy(dir.multiplyScalar(this.moveSpeed));
 				} else if (moveBackward) {
-					this.translationWorldDelta.copy(dir.multiplyScalar(-this.viewer.getMoveSpeed()));
+					this.translationWorldDelta.copy(dir.multiplyScalar(-this.moveSpeed));
 				}
 			}else{
 				if (moveForward && moveBackward) {
 					this.translationDelta.y = 0;
 				} else if (moveForward) {
-					this.translationDelta.y = this.viewer.getMoveSpeed();
+					this.translationDelta.y = this.moveSpeed;
 				} else if (moveBackward) {
-					this.translationDelta.y = -this.viewer.getMoveSpeed();
+					this.translationDelta.y = -this.moveSpeed;
 				}
 			}
 
 			if (moveLeft && moveRight) {
 				this.translationDelta.x = 0;
 			} else if (moveLeft) {
-				this.translationDelta.x = -this.viewer.getMoveSpeed();
+				this.translationDelta.x = -this.moveSpeed;
 			} else if (moveRight) {
-				this.translationDelta.x = this.viewer.getMoveSpeed();
+				this.translationDelta.x = this.moveSpeed;
 			}
 
 			if (moveUp && moveDown) {
 				this.translationWorldDelta.z = 0;
 			} else if (moveUp) {
-				this.translationWorldDelta.z = this.viewer.getMoveSpeed();
+				this.translationWorldDelta.z = this.moveSpeed;
 			} else if (moveDown) {
-				this.translationWorldDelta.z = -this.viewer.getMoveSpeed();
+				this.translationWorldDelta.z = -this.moveSpeed;
 			}
 		}
 
@@ -268,7 +268,7 @@ export class FirstPersonControls extends EventDispatcher {
 		}
 
 		{ // set view target according to speed
-			view.radius = 3 * this.viewer.getMoveSpeed();
+			view.radius = 3 * this.moveSpeed;
 		}
 
 		{ // decelerate over time
