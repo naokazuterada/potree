@@ -76,7 +76,6 @@ export class Annotation extends EventDispatcher {
 			</div>
 		`);
 
-		this.elMarker = this.domElement.find('.annotation-marker');
 		this.elTitlebar = this.domElement.find('.annotation-titlebar');
 		this.elTitle = this.elTitlebar.find('.annotation-label');
 		this.elTitle.append(this._title);
@@ -84,15 +83,17 @@ export class Annotation extends EventDispatcher {
 		this.elDescriptionClose = this.elDescription.find('.annotation-description-close');
 		// this.elDescriptionContent = this.elDescription.find(".annotation-description-content");
 
-		this.clickTitle = () => {
+		this.click = () => {
+			if (!this.domElement.hasClass('opened')) {
+				this.domElement.addClass('opened');
+			}
 			if(this.hasView()){
 				this.moveHere(this.scene.getActiveCamera());
 			}
 			this.dispatchEvent({type: 'click', target: this});
 		};
 
-		this.elTitle.click(this.clickTitle);
-		this.elMarker.click(this.clickTitle);
+		this.domElement.click(this.click);
 
 		this.actions = this.actions.map(a => {
 			if (a instanceof Action) {
@@ -115,11 +116,10 @@ export class Annotation extends EventDispatcher {
 			elButton.click(() => action.onclick({annotation: this}));
 		}
 
-		this.elDescriptionClose.hover(
-			e => this.elDescriptionClose.css('opacity', '1'),
-			e => this.elDescriptionClose.css('opacity', '0.8')
-		);
-		this.elDescriptionClose.click(e => this.setHighlighted(false));
+		this.elDescriptionClose.click(e => {
+			e.stopPropagation();
+			this.domElement.removeClass('opened')
+		});
 		// this.elDescriptionContent.html(this._description);
 
 		this.domElement.mouseenter(e => this.setHighlighted(true));
