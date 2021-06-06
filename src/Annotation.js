@@ -14,7 +14,8 @@ export class Annotation extends EventDispatcher {
 		this._index = args.index;
 		this._title = args.title || 'No Title';
 		this._marker = args.image ? `<div style="background-image: url(${args.image});"></div>` : '';
-		this._type = args.image ? 'image' : 'icon';
+		// this._type = args.image ? 'image' : 'icon';
+		this._type = 'image'; // TODO: iconにする時の準備ができておらず、大きくなってしまうだけ
 		this.offset = new THREE.Vector3();
 		this.uuid = THREE.Math.generateUUID();
 
