@@ -13,20 +13,10 @@ export class Annotation extends EventDispatcher {
 		this.data = args
 		this._index = args.index;
 		this._title = args.title || 'No Title';
-		this._description = args.description ? `<span class="annotation-description-content">${args.description}</span>` : '';
 		this._marker = args.image ? `<div style="background-image: url(${args.image});"></div>` : '';
 		this._type = args.image ? 'image' : 'icon';
 		this.offset = new THREE.Vector3();
 		this.uuid = THREE.Math.generateUUID();
-
-		this._attachment = '';
-		if (args.image) {
-			this._attachment = `<div class="image"><img src="${args.image}"></div>`;
-		} else if(args.pdf) {
-			this._attachment = `<div class="pdf"><a href="${args.pdf}" target="_blank">【PDFリンク】</a></div>`;
-		} else if(args.youtube) {
-			this._attachment = `<iframe width="560" height="315" src="https://www.youtube.com/embed/${args.youtube}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
-		}
 
 		if (!args.position) {
 			this.position = null;
@@ -65,11 +55,6 @@ export class Annotation extends EventDispatcher {
 					<span class="annotation-label"></span>
 				</div>
 				<div class="annotation-description">
-					<span class="annotation-description-close">
-						<img src="${iconClose}" width="16px">
-					</span>
-					${this._attachment}
-					${this._description}
 				</div>
 				<span class="annotation-prev">←</span>
 				<span class="annotation-next">→</span>
@@ -81,13 +66,9 @@ export class Annotation extends EventDispatcher {
 		this.elTitle = this.elTitlebar.find('.annotation-label');
 		this.elTitle.append(this._title);
 		this.elDescription = this.domElement.find('.annotation-description');
-		this.elDescriptionClose = this.elDescription.find('.annotation-description-close');
 		// this.elDescriptionContent = this.elDescription.find(".annotation-description-content");
 
 		this.click = () => {
-			if (!this.domElement.hasClass('opened')) {
-				this.domElement.addClass('opened');
-			}
 			if(this.hasView()){
 				this.moveHere(this.scene.getActiveCamera());
 			}
@@ -117,10 +98,6 @@ export class Annotation extends EventDispatcher {
 			elButton.click(() => action.onclick({annotation: this}));
 		}
 
-		this.elDescriptionClose.click(e => {
-			e.stopPropagation();
-			this.domElement.removeClass('opened')
-		});
 		// this.elDescriptionContent.html(this._description);
 
 		this.domElement.mouseenter(e => this.setHighlighted(true));
