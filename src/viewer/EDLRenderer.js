@@ -140,6 +140,8 @@ export class EDLRenderer{
 			renderer.setClearColor(0x000000, 1);
 		} else if (background === 'white') {
 			renderer.setClearColor(0xFFFFFF, 1);
+		} else if (background === 'originalColor') {
+			renderer.setClearColor('#1a2029', 1);
 		} else {
 			renderer.setClearColor(0x000000, 0);
 		}
