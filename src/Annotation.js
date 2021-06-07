@@ -62,8 +62,6 @@ export class Annotation extends EventDispatcher {
 				</div>
 				<div class="annotation-description">
 				</div>
-				<span class="annotation-prev">←</span>
-				<span class="annotation-next">→</span>
 				<div class="annotation-marker">${this._marker}</div>
 			</div>
 		`);
