@@ -34,12 +34,14 @@ export class FirstPersonControls extends EventDispatcher {
 		this.lockElevation = false;
 
 		this.keys = {
-			FORWARD: ['W'.charCodeAt(0), 38],
-			BACKWARD: ['S'.charCodeAt(0), 40],
-			LEFT: ['A'.charCodeAt(0), 37],
-			RIGHT: ['D'.charCodeAt(0), 39],
-			UP: ['R'.charCodeAt(0), 33],
-			DOWN: ['F'.charCodeAt(0), 34]
+			FORWARD: ['W'.charCodeAt(0), 38], // 38 = up arrow
+			BACKWARD: ['S'.charCodeAt(0), 40], // 40 = down arrow
+			LEFT: ['A'.charCodeAt(0), 37], // 37 = left arrow
+			RIGHT: ['D'.charCodeAt(0), 39], // 39 = right arrow
+			UP: ['R'.charCodeAt(0), 33], // 33 = page up
+			DOWN: ['F'.charCodeAt(0), 34], // 34 = page down
+			PAN_LEFT: ['Q'.charCodeAt(0)],
+			PAN_RIGHT: ['E'.charCodeAt(0)]
 		};
 
 		this.fadeFactor = 50;
@@ -47,6 +49,7 @@ export class FirstPersonControls extends EventDispatcher {
 		this.pitchDelta = 0;
 		this.translationDelta = new THREE.Vector3(0, 0, 0);
 		this.translationWorldDelta = new THREE.Vector3(0, 0, 0);
+		this.panDelta = new THREE.Vector2(0, 0);
 
 		this.tweens = [];
 
@@ -202,6 +205,8 @@ export class FirstPersonControls extends EventDispatcher {
 			let moveRight = this.keys.RIGHT.some(e => ih.pressedKeys[e]);
 			let moveUp = this.keys.UP.some(e => ih.pressedKeys[e]);
 			let moveDown = this.keys.DOWN.some(e => ih.pressedKeys[e]);
+			let panLeft = this.keys.PAN_LEFT.some(e => ih.pressedKeys[e]);
+			let panRight = this.keys.PAN_RIGHT.some(e => ih.pressedKeys[e]);
 
 			if(this.lockElevation){
 				let dir = view.direction;
@@ -239,6 +244,14 @@ export class FirstPersonControls extends EventDispatcher {
 				this.translationWorldDelta.z = this.moveSpeed;
 			} else if (moveDown) {
 				this.translationWorldDelta.z = -this.moveSpeed;
+			}
+
+			if (panLeft && panRight) {
+				this.yawDelta = 0
+			} else if (panLeft) {
+				this.yawDelta -= 0.001 * this.rotationSpeed;
+			} else if (panRight) {
+				this.yawDelta += 0.001 * this.rotationSpeed;
 			}
 		}
 
