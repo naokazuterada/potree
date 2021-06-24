@@ -41,7 +41,9 @@ export class FirstPersonControls extends EventDispatcher {
 			UP: ['R'.charCodeAt(0), 33], // 33 = page up
 			DOWN: ['F'.charCodeAt(0), 34], // 34 = page down
 			PAN_LEFT: ['Q'.charCodeAt(0)],
-			PAN_RIGHT: ['E'.charCodeAt(0)]
+			PAN_RIGHT: ['E'.charCodeAt(0)],
+			TILT_UP: ['T'.charCodeAt(0)],
+			TILT_DOWN: ['G'.charCodeAt(0)]
 		};
 
 		this.fadeFactor = 50;
@@ -207,6 +209,8 @@ export class FirstPersonControls extends EventDispatcher {
 			let moveDown = this.keys.DOWN.some(e => ih.pressedKeys[e]);
 			let panLeft = this.keys.PAN_LEFT.some(e => ih.pressedKeys[e]);
 			let panRight = this.keys.PAN_RIGHT.some(e => ih.pressedKeys[e]);
+			let tiltUp = this.keys.TILT_UP.some(e => ih.pressedKeys[e]);
+			let tiltDown = this.keys.TILT_DOWN.some(e => ih.pressedKeys[e]);
 
 			if(this.lockElevation){
 				let dir = view.direction;
@@ -247,11 +251,19 @@ export class FirstPersonControls extends EventDispatcher {
 			}
 
 			if (panLeft && panRight) {
-				this.yawDelta = 0
+				this.yawDelta = 0;
 			} else if (panLeft) {
-				this.yawDelta -= 0.001 * this.rotationSpeed;
+				this.yawDelta -= this.moveSpeed * 0.25;
 			} else if (panRight) {
-				this.yawDelta += 0.001 * this.rotationSpeed;
+				this.yawDelta += this.moveSpeed * 0.25;
+			}
+
+			if (tiltUp && tiltDown) {
+				this.pitchDelta = 0;
+			} else if (tiltUp) {
+				this.pitchDelta -= this.moveSpeed * 0.25;
+			} else if (tiltDown) {
+				this.pitchDelta += this.moveSpeed * 0.25;
 			}
 		}
 
