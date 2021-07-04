@@ -56,7 +56,7 @@ export class Annotation extends EventDispatcher {
 		let iconClose = exports.resourcePath + '/icons/close.svg';
 
 		this.domElement = $(`
-			<div class="annotation" data-type="${this._type}" data-index="${args.index}" oncontextmenu="return false;" >
+			<div class="annotation" data-type="${this._type}" data-index="${args.index}" data-category="${args.category}" oncontextmenu="return false;" >
 				<div class="annotation-titlebar">
 					<span class="annotation-label"></span>
 				</div>
