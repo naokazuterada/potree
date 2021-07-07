@@ -519,7 +519,7 @@ export class Annotation extends EventDispatcher {
 		}
 
 		let view = this.scene.view;
-		let animationDuration = 500;
+		let animationDuration = 2500;
 		let easing = TWEEN.Easing.Quartic.Out;
 
 		let endTarget;
@@ -534,7 +534,7 @@ export class Annotation extends EventDispatcher {
 		if (this.cameraPosition) {
 			let endPosition = this.cameraPosition;
 
-			Utils.moveTo(this.scene, endPosition, endTarget);
+			Utils.moveTo(this.scene, endPosition, endTarget, animationDuration);
 		} else if (this.radius) {
 			let direction = view.direction;
 			let endPosition = endTarget.clone().add(direction.multiplyScalar(-this.radius));
