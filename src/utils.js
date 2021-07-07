@@ -248,7 +248,7 @@ export class Utils {
 		return worker;
 	};
 
-	static moveTo(scene, endPosition, endTarget, animationDuration = 500){
+	static moveTo(scene, endPosition, endTarget, callback, animationDuration = 500){
 
 		let view = scene.view;
 		let camera = scene.getActiveCamera();
@@ -257,6 +257,7 @@ export class Utils {
 		{ // animate camera position
 			let tween = new TWEEN.Tween(view.position).to(endPosition, animationDuration);
 			tween.easing(easing);
+			tween.onComplete(callback);
 			tween.start();
 		}
 
