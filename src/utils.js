@@ -248,11 +248,10 @@ export class Utils {
 		return worker;
 	};
 
-	static moveTo(scene, endPosition, endTarget){
+	static moveTo(scene, endPosition, endTarget, animationDuration = 500){
 
 		let view = scene.view;
 		let camera = scene.getActiveCamera();
-		let animationDuration = 500;
 		let easing = TWEEN.Easing.Quartic.Out;
 
 		{ // animate camera position
