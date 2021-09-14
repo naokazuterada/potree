@@ -72,11 +72,16 @@ export class Annotation extends EventDispatcher {
 		this.elDescription = this.domElement.find('.annotation-description');
 		// this.elDescriptionContent = this.elDescription.find(".annotation-description-content");
 
+		// Tourの時にはゆっくり動かしたいので、clickの代わりに使う
+		this.click_inTour = () => {
+			if(this.hasView()){
+				this.moveHere(25000);
+			}
+			this.dispatchEvent({type: 'click', target: this});
+		}
 		this.click = () => {
 			if(this.hasView()){
-				this.moveHere(this.scene.getActiveCamera(), () => {
-					this.dispatchEvent({type: 'onCameraAnimationComplete', target: this})
-				});
+				this.moveHere();
 			}
 			this.dispatchEvent({type: 'click', target: this});
 		};
@@ -515,14 +520,15 @@ export class Annotation extends EventDispatcher {
 		return hasView;
 	};
 
-	moveHere (camera, callback) {
+	moveHere (animationDuration, easing) {
+		animationDuration = animationDuration || 2500;
+		console.log('animationDuration', animationDuration)
+		easing = easing || TWEEN.Easing.Quartic.Out;
 		if (!this.hasView()) {
 			return;
 		}
 
 		let view = this.scene.view;
-		let animationDuration = 2500;
-		let easing = TWEEN.Easing.Quartic.Out;
 
 		let endTarget;
 		if (this.cameraTarget) {
@@ -536,7 +542,9 @@ export class Annotation extends EventDispatcher {
 		if (this.cameraPosition) {
 			let endPosition = this.cameraPosition;
 
-			Utils.moveTo(this.scene, endPosition, endTarget, callback, animationDuration);
+			Utils.moveTo(this.scene, endPosition, endTarget, () => {
+				this.dispatchEvent({type: 'onCameraAnimationComplete', target: this})
+			}, animationDuration);
 		} else if (this.radius) {
 			let direction = view.direction;
 			let endPosition = endTarget.clone().add(direction.multiplyScalar(-this.radius));
