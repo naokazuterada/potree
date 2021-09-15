@@ -75,7 +75,7 @@ export class Annotation extends EventDispatcher {
 		// Tourの時にはゆっくり動かしたいので、clickの代わりに使う
 		this.click_inTour = () => {
 			if(this.hasView()){
-				this.moveHere(25000);
+				this.moveHere(10000);
 			}
 			this.dispatchEvent({type: 'click', target: this});
 		}
