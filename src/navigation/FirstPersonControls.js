@@ -30,7 +30,7 @@ export class FirstPersonControls extends EventDispatcher {
 		this.sceneControls = new THREE.Scene();
 
 		this.rotationSpeed = 200;
-		this.moveSpeed = 0.2;
+		this.moveSpeed = 1;
 		this.lockElevation = false;
 
 		this.keys = {
@@ -44,7 +44,8 @@ export class FirstPersonControls extends EventDispatcher {
 			PAN_RIGHT: ['E'.charCodeAt(0)],
 			TILT_UP: ['T'.charCodeAt(0)],
 			TILT_DOWN: ['G'.charCodeAt(0)],
-			SHIFT: [16]
+			SHIFT: [16],
+			ALT: [18]
 		};
 
 		this.fadeFactor = 50;
@@ -213,10 +214,14 @@ export class FirstPersonControls extends EventDispatcher {
 			let tiltUp = this.keys.TILT_UP.some(e => ih.pressedKeys[e]);
 			let tiltDown = this.keys.TILT_DOWN.some(e => ih.pressedKeys[e]);
 			let shift = this.keys.SHIFT.some(e => ih.pressedKeys[e]);
+			let alt = this.keys.ALT.some(e => ih.pressedKeys[e]);
 
 			let moveSpeed = this.moveSpeed
 			if (shift) {
 				moveSpeed *= 5
+			}
+			if (alt) {
+				moveSpeed /= 5
 			}
 
 			if(this.lockElevation){
