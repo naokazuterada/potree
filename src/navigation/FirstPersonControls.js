@@ -38,12 +38,12 @@ export class FirstPersonControls extends EventDispatcher {
 			BACKWARD: ['S'.charCodeAt(0), 40], // 40 = down arrow
 			LEFT: ['A'.charCodeAt(0), 37], // 37 = left arrow
 			RIGHT: ['D'.charCodeAt(0), 39], // 39 = right arrow
-			UP: ['T'.charCodeAt(0), 33], // 33 = page up
-			DOWN: ['G'.charCodeAt(0), 34], // 34 = page down
+			UP: ['R'.charCodeAt(0), 33], // 33 = page up
+			DOWN: ['F'.charCodeAt(0), 34], // 34 = page down
 			PAN_LEFT: ['Q'.charCodeAt(0)],
 			PAN_RIGHT: ['E'.charCodeAt(0)],
-			TILT_UP: ['R'.charCodeAt(0)],
-			TILT_DOWN: ['F'.charCodeAt(0)],
+			TILT_UP: ['T'.charCodeAt(0)],
+			TILT_DOWN: ['G'.charCodeAt(0)],
 			SHIFT: [16]
 		};
 
