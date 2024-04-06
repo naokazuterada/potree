@@ -55,10 +55,12 @@ export class Annotation extends EventDispatcher {
 
 		let iconClose = exports.resourcePath + '/icons/close.svg';
 
+		const groupCount = this.data.group ? this.data.group.length : 0
+		const groupCountHtml = groupCount > 0 ? `<span class="group-count">+${groupCount}</span>` : ''
 		this.domElement = $(`
 			<div class="annotation" data-type="${this._type}" data-index="${args.index}" data-category="${args.category}" oncontextmenu="return false;" >
 				<div class="annotation-titlebar">
-					<span class="annotation-label"></span>
+					<span class="annotation-label"></span>${groupCountHtml}
 				</div>
 				<div class="annotation-description">
 				</div>
