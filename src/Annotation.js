@@ -11,6 +11,7 @@ export class Annotation extends EventDispatcher {
 
 		this.scene = null;
 		this.data = args
+		this.isGroup = 0 < badgeCount
 		this._index = args.index;
 		this._title = args.title || 'No Title';
 		this._marker = '';
@@ -56,10 +57,10 @@ export class Annotation extends EventDispatcher {
 		let iconClose = exports.resourcePath + '/icons/close.svg';
 
 		// グループ関係
-		let groupCountHtml = badgeCount ? `<span class="group-count">+${badgeCount}</span>` : ''
-
+		let groupCountHtml = this.isGroup ? `<span class="group-count">+${badgeCount}</span>` : ''
+		// let is_group_child = !this.isGroup && this.data.grouped ? 'data-is_group_child="true"' : ''
 		this.domElement = $(`
-			<div class="annotation" data-grouped="${this.data.grouped}" data-type="${this._type}" data-index="${args.index}" data-category="${args.category}" oncontextmenu="return false;" >
+			<div class="annotation" data-is_group="${this.isGroup}" data-type="${this._type}" data-index="${args.index}" data-category="${args.category}" oncontextmenu="return false;" >
 				<div class="annotation-titlebar">
 					<span class="annotation-label"></span>${groupCountHtml}
 				</div>
