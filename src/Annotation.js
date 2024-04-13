@@ -526,7 +526,6 @@ export class Annotation extends EventDispatcher {
 
 	moveHere (animationDuration, easing) {
 		animationDuration = animationDuration || 2500;
-		console.log('animationDuration', animationDuration)
 		easing = easing || TWEEN.Easing.Quartic.Out;
 		if (!this.hasView()) {
 			return;
