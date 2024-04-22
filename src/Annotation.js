@@ -57,7 +57,7 @@ export class Annotation extends EventDispatcher {
 		let iconClose = exports.resourcePath + '/icons/close.svg';
 
 		// グループ関係
-		let groupCountHtml = this.isGroup ? `<span class="group-count">+${badgeCount}</span>` : ''
+		let groupCountHtml = this.isGroup ? `<span class="group-count"><span class="group-count-inner">+${badgeCount}</span></span>` : ''
 		// let is_group_child = !this.isGroup && this.data.grouped ? 'data-is_group_child="true"' : ''
 		this.domElement = $(`
 			<div class="annotation" data-is_group="${this.isGroup}" data-type="${this._type}" data-index="${args.index}" data-category="${args.category}" oncontextmenu="return false;" >
