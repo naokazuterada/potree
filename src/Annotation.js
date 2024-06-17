@@ -544,7 +544,18 @@ export class Annotation extends EventDispatcher {
 
 		if (this.cameraPosition) {
 			let endPosition = this.cameraPosition;
-
+			// TODO すでにカメラの移動が完了している場合は、即時onCameraAnimationCompleteを呼ぶようにしたい
+			// console.log('>>>', endPosition, endTarget)
+			// console.log(view.position.equals(endPosition), view.getPivot().equals(endTarget))
+			// console.log(view.getPivot())
+			// カメラの位置が同じ場合はすぐにonCameraAnimationCompleteを呼ぶ
+			// if (view.position.equals(endPosition) && view.getPivot().equals(endTarget)) {
+			// if (view.position.equals(endPosition)) {
+			// 	// TODO ここではカメラの向きのみ変える
+			// 	console.log('カメラの位置が同じ場合はすぐにonCameraAnimationCompleteを呼ぶ')
+			// 	this.dispatchEvent({type: 'onCameraAnimationComplete', target: this})
+			// 	return;
+			// }
 			Utils.moveTo(this.scene, endPosition, endTarget, () => {
 				this.dispatchEvent({type: 'onCameraAnimationComplete', target: this})
 			}, animationDuration);
