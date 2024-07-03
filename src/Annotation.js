@@ -76,14 +76,9 @@ export class Annotation extends EventDispatcher {
 		this.elDescription = this.domElement.find('.annotation-description');
 		// this.elDescriptionContent = this.elDescription.find(".annotation-description-content");
 
-		// Tourの時にはゆっくり動かしたいので、clickの代わりに使う
-		this.click_inTour = () => {
-			if(this.hasView()){
-				this.moveHere(10000);
-			}
-			this.dispatchEvent({type: 'click', target: this});
-		}
 		this.click = () => {
+			// この関数は、外（_alias.vueなど）からは呼ばないようにする
+			// TODO 外部から呼び出されたと時にエラー発行できるとよい
 			if(this.hasView()){
 				this.moveHere();
 			}
