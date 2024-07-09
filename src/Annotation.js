@@ -539,18 +539,33 @@ export class Annotation extends EventDispatcher {
 
 		if (this.cameraPosition) {
 			let endPosition = this.cameraPosition;
-			// TODO すでにカメラの移動が完了している場合は、即時onCameraAnimationCompleteを呼ぶようにしたい
-			// console.log('>>>', endPosition, endTarget)
-			// console.log(view.position.equals(endPosition), view.getPivot().equals(endTarget))
-			// console.log(view.getPivot())
-			// カメラの位置が同じ場合はすぐにonCameraAnimationCompleteを呼ぶ
-			// if (view.position.equals(endPosition) && view.getPivot().equals(endTarget)) {
-			// if (view.position.equals(endPosition)) {
-			// 	// TODO ここではカメラの向きのみ変える
-			// 	console.log('カメラの位置が同じ場合はすぐにonCameraAnimationCompleteを呼ぶ')
-			// 	this.dispatchEvent({type: 'onCameraAnimationComplete', target: this})
-			// 	return;
-			// }
+
+			// ------------------------------------------------
+			// カメラの位置と向きが同じ場合はアニメーションをスキップ
+
+			// 現在のカメラ位置と向きを取得
+			const camera = viewer.scene.getActiveCamera();
+			const currentPosition = camera.position.clone();
+			const currentDirection = new THREE.Vector3();
+  		camera.getWorldDirection(currentDirection);
+
+			// 目的の方向ベクトルを計算
+			const targetDirection = new THREE.Vector3().subVectors(endTarget, endPosition).normalize();
+
+			// 位置の比較
+			const positionThreshold = 0.01;
+			const positionEqual = currentPosition.distanceTo(endPosition) < positionThreshold;
+
+			// 向きの比較（ベクトル間の角度を計算）
+			const angleThreshold = 0.01; // ラジアンでのしきい値
+			const angleDifference = currentDirection.angleTo(targetDirection);
+			const directionEqual = angleDifference < angleThreshold;
+
+			if (positionEqual && directionEqual) {
+				animationDuration = 0;
+			}
+			// ------------------------------------------------
+
 			Utils.moveTo(this.scene, endPosition, endTarget, () => {
 				this.dispatchEvent({type: 'onCameraAnimationComplete', target: this})
 			}, animationDuration);
